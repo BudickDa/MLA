@@ -1,11 +1,14 @@
 export default class Vector {
-    constructor(valuesOrDimension) {
+    constructor(valuesOrDimension, label) {
         if (Array.isArray(valuesOrDimension)) {
             this.values = valuesOrDimension;
         } else if (typeof valuesOrDimension === "number") {
             this.values = Array.apply(null, Array(valuesOrDimension)).map(Number.prototype.valueOf, 0);
         } else {
             throw TypeError("Parameter of vector constructor has to be an array or a number");
+        }
+        if(typeof label === 'string'){
+            this.label = label;
         }
     }
 
@@ -20,7 +23,7 @@ export default class Vector {
     }
 
     euclideanDistance(vector) {
-        if (!vector instanceof Vector) {
+        if (!(vector instanceof Vector)) {
             throw new TypeError("Parameter has to be a vector.");
         }
         if (this.values.length !== vector.length()) {

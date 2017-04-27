@@ -9,7 +9,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Vector = function () {
-    function Vector(valuesOrDimension) {
+    function Vector(valuesOrDimension, label) {
         _classCallCheck(this, Vector);
 
         if (Array.isArray(valuesOrDimension)) {
@@ -18,6 +18,9 @@ var Vector = function () {
             this.values = Array.apply(null, Array(valuesOrDimension)).map(Number.prototype.valueOf, 0);
         } else {
             throw TypeError("Parameter of vector constructor has to be an array or a number");
+        }
+        if (typeof label === 'string') {
+            this.label = label;
         }
     }
 
@@ -35,7 +38,7 @@ var Vector = function () {
     }, {
         key: "euclideanDistance",
         value: function euclideanDistance(vector) {
-            if (!vector instanceof Vector) {
+            if (!(vector instanceof Vector)) {
                 throw new TypeError("Parameter has to be a vector.");
             }
             if (this.values.length !== vector.length()) {
