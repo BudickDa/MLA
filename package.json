@@ -32,7 +32,7 @@
     "babel-regenerator-runtime": "^6.5.0",
     "install": "^0.8.9",
     "lancaster-stemmer": "^1.0.0",
-    "npm": "^4.5.0",
+    "npm": "^5.7.1",
     "snowball-german": "^1.0.0",
     "stemmer": "^1.0.0",
     "underscore": "^1.8.3"
