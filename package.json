@@ -6,7 +6,9 @@
   "scripts": {
     "test": "npm run build && mocha",
     "build": "babel src -d dist --copy-files",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -32,12 +34,14 @@
     "babel-regenerator-runtime": "^6.5.0",
     "install": "^0.8.9",
     "lancaster-stemmer": "^1.0.0",
-    "npm": "^4.5.0",
+    "npm": "^5.5.0",
     "snowball-german": "^1.0.0",
     "stemmer": "^1.0.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "snyk": "^1.83.0"
   },
   "devDependencies": {
     "mocha": "^3.1.2"
-  }
+  },
+  "snyk": true
 }
