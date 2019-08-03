@@ -4,7 +4,7 @@
   "description": "MLA (machine learning algorithms): A collection of classfier and machine learning algorythms with a focus on text and speech.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && mocha",
+    "test": "npm run build && mocha ./test/index.js",
     "build": "babel src -d dist --copy-files",
     "prepublish": "npm run build"
   },
@@ -16,6 +16,7 @@
     "classifier",
     "machine learning",
     "knearest neighbour",
+    "kmean",
     "gaussian",
     "document clustering",
     "big data"
@@ -30,14 +31,22 @@
     "babel-preset-es2016": "^6.16.0",
     "babel-preset-es2017": "^6.16.0",
     "babel-regenerator-runtime": "^6.5.0",
+    "chance": "^1.0.8",
     "install": "^0.8.9",
     "lancaster-stemmer": "^1.0.0",
+    "lodash": "^4.17.4",
+    "lomath": "^0.3.0",
+    "multivariate-gaussian": "^3.3.1",
+    "ndarray-determinant": "^1.0.0",
+    "ndarray-pack": "^1.2.1",
     "npm": "^4.5.0",
+    "numeric": "^1.2.6",
     "snowball-german": "^1.0.0",
     "stemmer": "^1.0.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "chai": "*"
   }
 }

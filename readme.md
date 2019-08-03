@@ -48,6 +48,6 @@ Clusters documents unsupervised by bag of words.
     const clusterer = new DocumentClustering(corpus, dimensions, stopwords);
 
     const k = 3; //sort into three clusters
-    clusterer.kNearestNeighbour(k, tmpCenters).then(kNearestNeighbour => {
-    	console.log(kNearestNeighbour); => [['Text...', 'Another similar text...'],['Text...', 'Another similar text...'],['Text...', 'Another similar text...']]
+    clusterer.cluster(k, tmpCenters).then(cluster => {
+    	console.log(cluster); => [['Text...', 'Another similar text...'],['Text...', 'Another similar text...'],['Text...', 'Another similar text...']]
     });

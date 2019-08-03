@@ -34,8 +34,8 @@ var DocumentClustering = function () {
 	function DocumentClustering(corpus) {
 		var _this = this;
 
-		var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 150;
-		var rareFirst = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+		var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 400;
+		var commonFirst = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
 		_classCallCheck(this, DocumentClustering);
 
@@ -59,13 +59,13 @@ var DocumentClustering = function () {
     * Weights common words heigher if weight === 'common'.
     * Default is that rare words are more important.
     */
-			if (rareFirst) {
+			if (commonFirst) {
 				values.sort(function (a, b) {
-					return a - b;
+					return b - a;
 				});
 			} else {
 				values.sort(function (a, b) {
-					return b - a;
+					return a - b;
 				});
 			}
 			var pivot = values[n];
@@ -131,7 +131,7 @@ var DocumentClustering = function () {
 			return load;
 		}()
 	}, {
-		key: 'findCenters',
+		key: '_findCenters',
 		value: function () {
 			var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(k) {
 				var _this2 = this;
@@ -206,7 +206,7 @@ var DocumentClustering = function () {
 			return findCenters;
 		}()
 	}, {
-		key: 'kNearestNeighbour',
+		key: 'cluster',
 		value: function () {
 			var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3() {
 				var k = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 5;
@@ -231,7 +231,7 @@ var DocumentClustering = function () {
 								}
 
 								_context3.next = 6;
-								return this.findCenters(k);
+								return this._findCenters(k);
 
 							case 6:
 								centers = _context3.sent;
@@ -257,7 +257,7 @@ var DocumentClustering = function () {
 								}
 
 								_context3.next = 15;
-								return this.findCenters(k);
+								return this._findCenters(k);
 
 							case 15:
 								centers = _context3.sent;
@@ -320,7 +320,7 @@ var DocumentClustering = function () {
 
 								testCorpus = _test2.default.constructCorpus(documents);
 								_context4.next = 6;
-								return this.kNearestNeighbour(k);
+								return this.cluster(k);
 
 							case 6:
 								clusters = _context4.sent;
@@ -332,13 +332,11 @@ var DocumentClustering = function () {
 									cluster.forEach(function (document) {
 										categories.push(_test2.default.findCategory(document, documents));
 									});
-									var values = _utils2.default.softmax(_underscore2.default.values(_text2.default.wordCounter(categories)));
-									var correct = _underscore2.default.max(values);
-									var wrong = _utils2.default.sum(values) - _underscore2.default.max(values);
-									corrects += correct * cluster.length;
-									wrongs += wrong * cluster.length;
+									var values = _underscore2.default.values(_text2.default.wordCounter(categories));
+									corrects += _underscore2.default.max(values);
+									wrongs += _utils2.default.sum(values) - _underscore2.default.max(values);
 								});
-								return _context4.abrupt('return', wrongs / corrects * 100);
+								return _context4.abrupt('return', wrongs / (corrects + wrongs) * 100);
 
 							case 11:
 							case 'end':

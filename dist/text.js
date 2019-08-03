@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _underscore = require('underscore');
@@ -61,17 +63,35 @@ var Text = function () {
 	}, {
 		key: 'createBagOfWords',
 		value: function () {
-			var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(text) {
-				var words = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-				var language = arguments[2];
+			var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(text, words, language) {
 				var wordsOfText, values;
 				return regeneratorRuntime.wrap(function _callee$(_context) {
 					while (1) {
 						switch (_context.prev = _context.next) {
 							case 0:
+								if (!(!(typeof text === 'undefined' ? 'undefined' : _typeof(text)) === 'string')) {
+									_context.next = 2;
+									break;
+								}
+
+								throw new TypeError('Text: Parameter text of createBagOfWords has to be a string');
+
+							case 2:
 								if (!language) {
 									language = Text.languageDetect(text);
 								}
+								if (!_utils2.default.isStringArray(words)) {
+									words = Text.wordTokenizer(text);
+								}
+
+								if (!(words.length === 0)) {
+									_context.next = 6;
+									break;
+								}
+
+								throw new TypeError('Text: text has to contain a least one word');
+
+							case 6:
 								words = words.map(function (w) {
 									return w.toLowerCase();
 								});
@@ -88,7 +108,7 @@ var Text = function () {
 								});
 								return _context.abrupt('return', new _vector2.default(values, text));
 
-							case 6:
+							case 11:
 							case 'end':
 								return _context.stop();
 						}
@@ -96,7 +116,7 @@ var Text = function () {
 				}, _callee, this);
 			}));
 
-			function createBagOfWords(_x) {
+			function createBagOfWords(_x, _x2, _x3) {
 				return _ref.apply(this, arguments);
 			}
 
@@ -191,8 +211,8 @@ var Text = function () {
 		value: function wordCounter(array) {
 			var insensitive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-			if (!Array.isArray(array)) {
-				throw new TypeError('Parameter array in wordCounter must be an array.');
+			if (!_utils2.default.isStringArray(array)) {
+				throw new TypeError('Text: Parameter array in wordCounter must be an array of string.');
 			}
 			if (insensitive) {
 				array = array.map(function (w) {

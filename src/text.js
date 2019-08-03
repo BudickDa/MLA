@@ -21,9 +21,18 @@ export default class Text {
 		return text.replace(/\n|\t/gi, '').replace(/\s+/gi, ' ').replace(/\d/gi, '%d');
 	}
 
-	static async createBagOfWords(text, words = [], language) {
+	static async createBagOfWords(text, words, language) {
+		if(!typeof text === 'string'){
+			throw new TypeError('Text: Parameter text of createBagOfWords has to be a string');
+		}
 		if (!language) {
 			language = Text.languageDetect(text);
+		}
+		if(!Utils.isStringArray(words)){
+			words = Text.wordTokenizer(text);
+		}
+		if(words.length ===0){
+			throw new TypeError('Text: text has to contain a least one word');
 		}
 		words = words.map(w => w.toLowerCase());
 		const wordsOfText = Text.wordTokenizer(text)
@@ -116,8 +125,8 @@ export default class Text {
 	}
 
 	static wordCounter(array, insensitive = true) {
-		if (!Array.isArray(array)) {
-			throw new TypeError('Parameter array in wordCounter must be an array.');
+		if (!Utils.isStringArray(array)) {
+			throw new TypeError('Text: Parameter array in wordCounter must be an array of string.');
 		}
 		if (insensitive) {
 			array = array.map(w => (w.toLowerCase()));
